@@ -42,7 +42,7 @@ h1 {
     border-radius: 30px;
     border: 15px solid #053742;
     margin: 5px;
-    height: calc(100vh - 240px);
+    height: calc(100vh - 250px);
     display: flex;
     flex-direction: column;
     justify-content: stretch; 
