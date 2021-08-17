@@ -33,6 +33,25 @@ function RPS (userChoice) {
       const computerPlay = document.querySelector('#computer-play');
       const hands = document.querySelectorAll('.hand'); 
 
+      document.querySelector('.rock').addEventListener('mouseover', () => {
+         document.querySelector('#audio-hover').play();
+      });
+
+      document.querySelector('.scissors').addEventListener('mouseenter', () => {
+         document.querySelector('#audio-hover').play();
+      });
+
+      document.querySelector('.paper').addEventListener('mouseenter', () => {
+         document.querySelector('#audio-hover').play();
+      });
+
+      document.querySelector('#lets-play').addEventListener('mouseenter', () => {
+         document.querySelector('#audio-in-out').play();
+      });
+      document.querySelector('#lets-play').addEventListener('mouseleave', () => {
+         document.querySelector('#audio-in-out').play();
+      });
+
       //repite animacion
       hands.forEach(hand =>{
          hand.addEventListener('animationend', function(){
@@ -57,7 +76,7 @@ function RPS (userChoice) {
                //Actualizo imagenes
                document.querySelector('.player-hand').src = `./assets/${this.textContent}.png`;   
                document.querySelector('.computer-hand').src = `./assets/${computerChoice}.png`;                
-            }, 2000); //esto esta configurado para tener un delay de 2s (2000ms)
+            }, 1500); //esto esta configurado para tener un delay de 1.5s (1500ms)
             
             playerPlay.style.animation = "shakePlayer 2s ease";
             computerPlay.style.animation = "shakeComputer 2s ease";
@@ -67,14 +86,15 @@ function RPS (userChoice) {
       });
    };
 
-      //const letsPlay = document.querySelector('#lets-play');
-      //const resultPage = document.querySelector('#result');
-      //const plays = document.querySelector('.plays');
-      //const images = document.querySelector('.images');
-      //const scores = document.querySelector('.Score');
-
    const checkScore = () => {
       if (pScore == 3 || cScore == 3) {
+         if (pScore == 3) {
+            document.getElementById('audio-win').play();
+         }
+         if (cScore == 3) {
+            document.getElementById('audio-loose').play();
+         }
+
          resultPage.classList.add('fadeIn'); //muestra nuevamente la pantalla de resultado y el boton de retry
         
          plays.classList.remove('fadeIn');
@@ -89,12 +109,6 @@ function RPS (userChoice) {
             document.querySelector('#computer-score').textContent = 0;
             resetHands();
          });
-         
-
-         //document.querySelector('.plays').classList.remove('fadeOut');
-       //  document.querySelector('.images').classList.assList.add('fadeOut');
-       //  document.querySelector('.Score').classList.add('fadeOut');
-         
       }   
    } 
 
@@ -111,7 +125,6 @@ function RPS (userChoice) {
       //when its a tie
       if (userChoice === computerChoice) {
          winner.textContent = "That's a tie!";
-         console.log('tie')
          return;
       }
 
@@ -119,21 +132,21 @@ function RPS (userChoice) {
       else if ((computerChoice === "ROCK" && userChoice === "PAPER") || (computerChoice === "PAPER" && userChoice === "SCISSORS") || (computerChoice === "SCISSORS" && userChoice === "ROCK")) {
          winner.textContent = "Yeah, baby!"; 
          document.querySelector('#lets-play').textContent = "Again!";
-         console.log('u win')
+         document.getElementById('audio-shake').play(); ///added line
+         document.getElementById('computer-play').style.animation = "shakeLoser 250ms ease";
          pScore++;
          updateScore();
-         console.log(pScore);
          return;
       }
       //when computer wins
       else {
          winner.textContent = "Haha, Loser!";
          document.querySelector('#lets-play').textContent = "Retry!";
-         console.log('u loose')
+         document.getElementById('audio-shake').play(); //added line
+         document.getElementById('player-play').style.animation = "shakeLoser 250ms ease";
          cScore++;
          updateScore();
          return;
-         console.log(cScore);
 
       }
    }
